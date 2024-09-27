@@ -21,3 +21,4 @@ please note for fabric, you'll need the forge config API port mod. This is only 
 
 ## How to setup
 You're going to need to follow the required steps to get your mod working on your mod loader. This mod isn't so advanced to get your mod seen by the loader.
+Once you'be got it running, we're going to make our main mod class extend `MinecraftMod`. This class contains all we'll ever need, well besides mixins. 
