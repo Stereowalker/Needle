@@ -30,10 +30,25 @@ In order to set up our configuration file, you'll need to create a new class and
 public class Config implements ConfigObject {
 }
 ```
-You can omit `ConfigObject` if you want to statically reference your config options.
-there are a few options you have in `@UnionConfig`.
+You can omit `ConfigObject` if you want to statically reference your config options. There are a few options you have in `@UnionConfig`.
 1) `name`: This is what the config file would be named when it's generated and will be read. So if you set the name to "yourconfigfilename", the file generated will be "yourconfigfilename-common.toml", depending on the environment
 2) `translatableName`: Use this if you're using the config gui to change the name depending on the language
 3) `folder`: If you want the file to be in a folder in the config folder
 4) `appendWithType`: Set this to false if you don't want the type of config to be appended to your file. Essentially, your file will no longer be "yourconfigfilename-common.toml", but instead "yourconfigfilename.toml". Please be careful of using 2 different types of config in the same file when using this option
 5) `autoReload`: Whether or not you want the config file to reload itself after a change is made. Enabled by default and only really useful if you want to ensure the config doesn't change after it's loaded
+
+Now for the entries, only primitives, strings, and collections are supported. You'll have to figure out any other data types yourself. To add an entry, you'll just have to add these annotations to your values
+```
+@UnionConfig.Entry(group = "Any Group" , name = "Magical Sword Damage", translatable = "config.any.sworddamage", side = ConfigSide.Shared)
+@UnionConfig.Comment(translatable = {"config.any.sworddamage.comment.1", "config.any.sworddamage.comment.2"}, comment = {"Each entry is one line in the comment of your config","You can also use \n to add a new line. It's all up to preference"})
+@UnionConfig.Range(min = 1, max = 100, useSlider = true)
+public int magicalSwordDamage = 20;
+```
+Let's go through each annotation one by one
+`@UnionConfig.Entry`
+1) `group`: Only useful for organizing your entries in its file. Can be omitted
+2) `name`: This is the name of the option in the file and what will be read
+3) `translatable`: Same deal as the `translatableName` from earlier. Can be omitted
+4) `side`: This determines when the file will be read Your options are `ConfigSide.Shared`, `ConfigSide.Server`, and `ConfigSide.Client`. `ConfigSide.Shared` is loaded when the client is started and when the world is loaded and synced to all connected clients. `ConfigSide.Server` is only loaded when the world is loaded, any attempts to read this value on the client will only result in what you set as the default. `ConfigSide.Client` is only read when the client is started and will only result in the default value when read by a server
+
+   
