@@ -51,11 +51,26 @@ Let's go through each annotation one by one
 3) `translatable`: Same deal as the `translatableName` from earlier. Can be omitted
 4) `side`: This determines when the file will be read Your options are `ConfigSide.Shared`, `ConfigSide.Server`, and `ConfigSide.Client`. `ConfigSide.Shared` is loaded when the client is started and when the world is loaded and synced to all connected clients. `ConfigSide.Server` is only loaded when the world is loaded, any attempts to read this value on the client will only result in what you set as the default. `ConfigSide.Client` is only read when the client is started and will only result in the default value when read by a server
 
-`@UnionConfig.Comment`. Can be omitted
+Use `@UnionConfig.Comment` to add comments. Can be omitted
 1) `comment`: The comment that will be generated in your file. Use it to convey important information about the option to your users
 2) `translatable`: Same deal as the `translatableName` from earlier. Can be omitted
 
-`@UnionConfig.Range`. For numerical entries, can be omitted
+Use `@UnionConfig.Range` for numerical entries, can be omitted
 1) `min`: The minimum value of the entry. If the user specifies a number lower than this, it'll be corrected to this value
 2) `max`: The maximum value of the entry. If the user specifies a number higher than this, it'll be corrected to this value
 3) `useSlider`: Only useful if you're using the gui, it uses a slider instead of a text box for your entry
+
+### Registration
+To register your config entry, create an instance of your class. Omit this step if you have static entries
+```
+public static final Config CONFIG = new Config();
+```
+Pass your instance, or class if you are using static entries to `ConfigBuilder` to have it registered
+```
+ConfigBuilder.registerConfig(CONFIG);
+```
+For static entries
+```
+ConfigBuilder.registerConfig(Config.class);
+```
+The moment this is called, your entry will be registered and loaded. You have control of when you want your configurations to be loaded, but it's always best to call it as early as possible 
