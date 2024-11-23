@@ -26,7 +26,14 @@ Once you've got it running, we're going to make our main mod class extend `Minec
 Firstly, I'd like to explain what a configuration system is. It's a system that allows a developer to use user input to modify the way a mod behaves. Let's take an example: Imagine you created a magical sword in your mod and you would like the user to change how much damage the sword should do. This is where a configuration system comes in, you can allow the user to specify that number in a file and you (well the mod) will read the file and apply that number.
 In order to set up our configuration file, you'll need to create a new class and add the `@UnionConfig` annotation:
 ```
-@UnionConfig(name = "unionlib")
+@UnionConfig(name = "yourconfigfilename")
 public class Config implements ConfigObject {
 }
 ```
+You can omit `ConfigObject` if you want to statically reference your config options.
+there are a few options you have in `@UnionConfig`.
+1) `name`: This is what the config file would be named when it's generated and will be read. So if you set the name to "yourconfigfilename", the file generated will be "yourconfigfilename-common.toml", depending on the environment
+2) `translatableName`: Use this if you're using the config gui to change the name depending on the language
+3) `folder`: If you want the file to be in a folder in the config folder
+4) `appendWithType`: Set this to false if you don't want the type of config to be appended to your file. Essentially, your file will no longer be "yourconfigfilename-common.toml", but instead "yourconfigfilename.toml". Please be careful of using 2 different types of config in the same file when using this option
+5) `autoReload`: Whether or not you want the config file to reload itself after a change is made. Enabled by default and only really useful if you want to ensure the config doesn't change after it's loaded
