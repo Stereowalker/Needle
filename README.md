@@ -51,4 +51,11 @@ Let's go through each annotation one by one
 3) `translatable`: Same deal as the `translatableName` from earlier. Can be omitted
 4) `side`: This determines when the file will be read Your options are `ConfigSide.Shared`, `ConfigSide.Server`, and `ConfigSide.Client`. `ConfigSide.Shared` is loaded when the client is started and when the world is loaded and synced to all connected clients. `ConfigSide.Server` is only loaded when the world is loaded, any attempts to read this value on the client will only result in what you set as the default. `ConfigSide.Client` is only read when the client is started and will only result in the default value when read by a server
 
-   
+`@UnionConfig.Comment`. Can be omitted
+1) `comment`: The comment that will be generated in your file. Use it to convey important information about the option to your users
+2) `translatable`: Same deal as the `translatableName` from earlier. Can be omitted
+
+`@UnionConfig.Range`. For numerical entries, can be omitted
+1) `min`: The minimum value of the entry. If the user specifies a number lower than this, it'll be corrected to this value
+2) `max`: The maximum value of the entry. If the user specifies a number higher than this, it'll be corrected to this value
+3) `useSlider`: Only useful if you're using the gui, it uses a slider instead of a text box for your entry
